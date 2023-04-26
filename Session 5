@@ -1,0 +1,76 @@
+//import 'dart:convert';
+
+void main() {
+
+  Map<String, dynamic> json = {'field': 'Finance', 'salary': 100000, 'potential_bonus': 10000, 'Skills': ['Data Science', 'Mathematics', 'Microsoft Excel'], 'vacation_days': 15, 'job_name': 'Business Analyst'};
+
+  CareerSearch deserialisedCareerSearch = CareerSearch.fromJson(json);
+
+  var salary = deserialisedCareerSearch.salary;
+  
+  var jobname = deserialisedCareerSearch.jobname;
+
+  print(jobname);
+  
+}
+
+  class CareerSearch {
+    String? field;
+    double? salary;
+    double? potentialbonus;
+    List<String>? skillset;
+    int? vacationdays;
+    String? jobname;
+
+  CareerSearch(
+    {this.field,
+    this.salary,
+    this.potentialbonus,
+    this.skillset,
+    this.vacationdays,
+    this.jobname});
+  
+  CareerSearch.fromJson(Map < String, dynamic > json){
+    field = json['field'];
+    salary = json['salary'];
+    potentialbonus = json['potential_bonus'];
+    skillset = json['skillset'];
+    vacationdays = json['vacation_days'];
+    jobname = json['job_name'];
+  }
+ 
+  Map < String, dynamic > toJson() {
+    final Map < String, dynamic > data = < String, dynamic > {};
+    data['field'] = field;
+    data['salary'] = salary;
+    data['potential_bonus'] = potentialbonus;
+    data['skillset'] = skillset;
+    data['job_name'] = jobname;
+    return data;
+    }
+  }
+    ////
+// 1. Abstraction
+  abstract class Job {
+    void goForward();
+  }
+
+  class Search implements Job {
+    @override
+    void goForward(){
+      print('I am job searching');
+    }
+  }
+  // 2. Inheritance
+  class Career extends Job {
+    @override
+    void goForward(){
+      print('I found a job');
+    }
+  }
+  // 3. Encapsulation
+
+  // 4. Polymorphism
+ 
+
+ 
