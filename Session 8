@@ -1,0 +1,68 @@
+//import 'dart:convert';
+//import 'package:flutter/material.dart';
+//import 'package:http/http.dart' as http;
+//import 'package:google_fonts/google_fonts.dart';
+
+void main() async {
+  var jobtitle = await getJobTitleFromApi();
+  runApp( MyApp(jobtitle: jobtitle));
+}
+// apiResponse is json which is the lang and the form is Map<String, dynamc>
+var apiResponse = {"job_title":"Software Engineer","company_name":"Leidos"};
+}
+
+class MyApp extends StatelessWidget {
+  final JobTitle jobtitle;
+  final CompanyName companyname;
+  const MyApp({super.key, required this.jobtitle, required this.companyname});
+
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Katies App',
+      home:  HomePage(jobtitle: jobtitle),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key, required this.jobtitle, required this.companyname});
+  final JobTitle jobtitle;
+  final CompanyName companyname;
+  
+ 
+ @override
+  Widget build(BuildContext){
+    
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+        Container(color: Colors.green, height: 102.2, width: 102.2),
+        Text(jobtitle.name),
+        Text('Company: ${jobtitle.companyname}'),
+      ]),
+    );
+  }
+}
+
+class JobTitle {
+  final String name;
+  final String companyname;
+  JobTitle({ required this.name, required this.companyname});
+
+ factory JobTitle.fromJson(Map<String, dynamic> json) {
+   return JobTitle(
+    name: json['job_title'],
+    companyname: json['company_name']
+   );
+  }
+}
+
+Future<JobTitle> getJobTitleFromApi() async {
+ var response = await http.get(Uri.parse('https://indeed-jobs-api.p.rapidapi.com/indeed-us/'));
+ print(response.body);
+return JobTitle.fromJson(jsonDecode(response.body));
+}
